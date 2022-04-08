@@ -50,8 +50,24 @@
               gender: gender.value,
               email: email.value,
             };
-            let message = 'Payment complete! Reference: ' + response;
-            console.log(response);
+            console.log(transaction.reference)
+            fetch("/services/courseregister/:service", {
+                method: 'POST',
+                mode: 'CORS',
+                headers: {
+                    // "Access-Control-Allow-Origin": "http://localhost:4040",
+                    "Authorization": "sk_test_311b0f5158dfba3c9e4c697dd6febdeb679939eb",
+                    "Access-Control-Allow-Origin": '*',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(res => {
+                return res.json()
+            }).then(data => {
+                console.log(data)
+            })
+            // let message = 'Payment complete! Reference: ' + response;
+            // console.log(response);
           },
         });
         handler.openIframe();
