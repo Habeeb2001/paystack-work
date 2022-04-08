@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1 id="servicePrice">20000</h1>
+    <h1 id="serviceName">Rioland</h1>
+
+    <input type="text" placeholder="name" id="fullName" />
+
+    <input type="email" id="email" required placeholder="email" />
+    <br />
+    <select name="gender" id="gender">
+      <option value="select">Select gender</option>
+      <option value="male">male</option>
+      <option value="female">female</option>
+      <option value="others">others</option>
+    </select>
+    <br />
+    <button id="paybtn">pay now</button>
+    <!-- add this script -->
+    <script src="https://js.paystack.co/v1/inline.js"></script>
+    <!-- this -->
+    <!-- script -->
+    <script>
+
+     document.getElementById("paybtn").addEventListener("click",payWithPaystack,false)
+
+
+      function payWithPaystack(e) {
+        e.preventDefault();
+        let handler = PaystackPop.setup({
+          key: 'pk_test_99d69caec3f4f9bcf55f1f96a7c89a5653e2d80c', // Replace with your public key
+          email: document.getElementById('email').value,
+          amount: document.getElementById('servicePrice').textContent * 100,
+          ref: '' + Math.floor(Math.random() * 1000000000 + 1), // generates a pseudo-unique reference. Please replace with a reference you generated. Or remove the line entirely so our API will generate one for you
+          // label: "Optional string that replaces customer email"
+          onClose: function () {
+            alert('Window closed.');
+          },
+          callback: function (response) {
+            const data = {
+              price: price.value,
+              serviceName: serviceName.textContent,
+              studentName: studentName.value,
+              gender: gender.value,
+              email: email.value,
+            };
+            let message = 'Payment complete! Reference: ' + response;
+            console.log(response);
+          },
+        });
+        handler.openIframe();
+      }
+    </script>
+  </body>
+</html>
